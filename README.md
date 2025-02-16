@@ -63,7 +63,7 @@ chat-app
 
 3. Install the dependencies:
    ```
-   npm install
+   npm install --legacy-peer-deps
    ```
 
 4. Run the application:
