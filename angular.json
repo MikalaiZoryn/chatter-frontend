@@ -21,7 +21,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/magenta-violet.css",
+              "src/styles.sass"
             ],
             "scripts": []
           },
@@ -75,7 +76,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/magenta-violet.css",
+              "src/styles.sass"
             ],
             "scripts": []
           }

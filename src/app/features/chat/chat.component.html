@@ -1,0 +1,26 @@
+<div class="chat-container">
+    <mat-card class="chat-card">
+      <mat-card-header>
+        <mat-card-title>Chat</mat-card-title>
+      </mat-card-header>
+  
+      <mat-card-content class="chat-content">
+        <mat-list>
+          <mat-list-item *ngFor="let message of messages">
+            {{ message }}
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+  
+      <mat-card-actions>
+        <mat-form-field class="message-input" appearance="fill">
+          <mat-label>Type your message</mat-label>
+          <input matInput [formControl]="messageControl" (keyup.enter)="sendMessage()" placeholder="Message">
+          <button mat-icon-button matSuffix (click)="sendMessage()" [disabled]="messageControl.invalid">
+            <mat-icon>send</mat-icon>
+          </button>
+        </mat-form-field>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  
