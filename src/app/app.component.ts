@@ -6,8 +6,7 @@ import { ChatComponent } from './features/chat/chat.component';
   selector: 'app-root',
   imports: [RouterOutlet, ChatComponent],
   templateUrl: './app.component.html',
-  standalone: false,
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
   title = 'Chat Application';

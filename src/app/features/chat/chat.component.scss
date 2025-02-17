@@ -1,0 +1,144 @@
+// Define base variables for colors and spacing
+$primary-color: #6200ea;  // Example primary color for the chat
+$background-color: #f4f4f9; // Light background for the card
+$card-background: #ffffff;  // White background for the card
+$input-background: #fafafa; // Light background for input field
+$text-color: #333333;  // Dark text color for readability
+$border-radius: 8px; // Rounded corners for the chat elements
+$spacing-unit: 16px; // Base spacing unit for margins and paddings
+
+// Style the chat container
+.chat-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $background-color;
+  padding: $spacing-unit;
+}
+
+// Style the chat card
+.chat-card {
+  width: 100%;
+  max-width: 500px;
+  background-color: $card-background;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+// Style the card header
+.mat-card-header {
+  background-color: $primary-color;
+  color: white;
+  padding: $spacing-unit;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+}
+
+// Style the card content (chat messages)
+.chat-content {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: $spacing-unit;
+  background-color: $background-color;
+  color: $text-color;
+}
+
+// Style for the message list items
+mat-list {
+  margin: 0;
+  padding: 0;
+}
+
+mat-list-item {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+  color: $text-color;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+// Style the card actions (input section)
+.mat-card-actions {
+  padding: $spacing-unit;
+  background-color: $input-background;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+}
+
+// Style the form field for the message input
+.mat-form-field {
+  width: 85%;
+  margin-right: 8px;
+}
+
+// Style the input field
+.message-input input {
+  font-size: 1rem;
+  padding: 12px;
+  border-radius: $border-radius;
+  border: 1px solid #ddd;
+  background-color: $input-background;
+  color: $text-color;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    border-color: $primary-color;
+    outline: none;
+  }
+}
+
+// Style the send button
+.mat-icon-button {
+  background-color: $primary-color;
+  color: white;
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+  
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+// Make the input and send button appear side by side
+.message-input {
+  display: flex;
+  align-items: center;
+}
+
+// Additional responsive adjustments (optional)
+@media (max-width: 600px) {
+  .chat-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+  }
+  
+  .mat-card-header {
+    font-size: 1rem;
+  }
+  
+  .mat-form-field {
+    width: 70%;
+  }
+}
