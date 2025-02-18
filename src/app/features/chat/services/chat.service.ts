@@ -1,26 +1,36 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Client } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  private socket: WebSocket;
-  private messagesSubject = new BehaviorSubject<string[]>([]);
-  public messages$ = this.messagesSubject.asObservable();
+  private client: Client;
+  private messageSubject = new BehaviorSubject<any>(null);
+  public messages$ = this.messageSubject.asObservable();
 
   constructor() {
-    this.socket = new WebSocket('ws://localhost:8080/chat');
-    this.socket.onmessage = (event) => this.handleMessage(event);
+    this.client = new Client({
+      webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
+      reconnectDelay: 5000,
+      debug: (msg) => console.log(msg)
+    });
+
+    this.client.onConnect = () => {
+      this.client.subscribe('/topic/messages', (message) => {
+        this.messageSubject.next(JSON.parse(message.body));
+      });
+    };
+
+    this.client.activate();
   }
 
-  private handleMessage(event: MessageEvent) {
-    const messages = this.messagesSubject.value;
-    messages.push(event.data);
-    this.messagesSubject.next(messages);
-  }
-
-  sendMessage(message: string) {
-    this.socket.send(message);
+  sendMessage(message: any) {
+    this.client.publish({
+      destination: '/app/chat',
+      body: JSON.stringify(message)
+    });
   }
 }

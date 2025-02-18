@@ -25,22 +25,30 @@ import { MatListModule } from '@angular/material/list';
     MatListModule]
 })
 export class ChatComponent {
-  messages: string[] = [];
+  username: string = 'User' + Math.floor(Math.random() * 1000); // Generate a random username
+  messages: Message[] = [];
   messageControl: FormControl; // To control the input field
 
   constructor(private chatService: ChatService) {
-    this.chatService.messages$.subscribe((messages) => {
-      this.messages = messages;
+    this.chatService.messages$.subscribe((message) => {
+      if (message !== null && message.sender !== this.username) {
+        this.messages.push(message);
+      }
     });
     this.messageControl = new FormControl('', [Validators.required]);
   }
 
   sendMessage(): void {
-    const message = this.messageControl.value.trim();
+    const message = {sender: this.username, content: this.messageControl.value.trim()};
     if (message) {
       this.chatService.sendMessage(message);
       this.messages.push(message); // Push the message to the chat window
       this.messageControl.reset(); // Clear the input field
     }
   }
+}
+
+interface Message {
+  sender: string;
+  content: string;
 }
