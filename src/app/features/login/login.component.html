@@ -1,0 +1,8 @@
+<h1>Login</h1>
+<section>
+    <div>
+        <mat-label>Type your username</mat-label>
+        <input matInput type="text" placeholder="Username" [formControl]="usernameControl">
+    </div>
+    <button mat-flat-button [disabled]="usernameControl.invalid" (click)="login()">Login</button>
+</section>

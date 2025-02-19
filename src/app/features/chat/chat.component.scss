@@ -83,6 +83,10 @@ mat-list-item {
   margin-right: 8px;
 }
 
+mat-form-field.message-input {
+  width: 100%;
+}
+
 // Style the input field
 .message-input input {
   font-size: 1rem;

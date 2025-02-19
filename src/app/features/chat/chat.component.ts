@@ -8,13 +8,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { GlobalStateService } from '../../services/global-state.service';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
   imports: [
-    FormsModule,
     CommonModule,
     ReactiveFormsModule,
     MatCardModule,
@@ -22,25 +23,32 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    MatListModule]
+    MatListModule,
+    MatSidenavModule,
+  ]
 })
 export class ChatComponent {
-  username: string = 'User' + Math.floor(Math.random() * 1000); // Generate a random username
+  chats = ['General', 'Tech', 'Random'];
+  selectedChat = 'General';
+  username: string;
   messages: Message[] = [];
   messageControl: FormControl; // To control the input field
 
-  constructor(private chatService: ChatService) {
+  constructor(private chatService: ChatService, private globalStateService: GlobalStateService) {
     this.chatService.messages$.subscribe((message) => {
       if (message !== null && message.sender !== this.username) {
         this.messages.push(message);
       }
     });
-    this.messageControl = new FormControl('', [Validators.required]);
+    this.messageControl = new FormControl('');
+    this.username = this.globalStateService.currentState.user?.name || 'Guest';
   }
 
   sendMessage(): void {
-    const message = {sender: this.username, content: this.messageControl.value.trim()};
-    if (message) {
+    const user = this.globalStateService.currentState.user;
+    const messageContent = this.messageControl.value?.trim();
+    if (user && messageContent) {
+      const message = { sender: user.name, content: messageContent };
       this.chatService.sendMessage(message);
       this.messages.push(message); // Push the message to the chat window
       this.messageControl.reset(); // Clear the input field
